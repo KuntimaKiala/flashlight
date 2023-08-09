@@ -1,17 +1,14 @@
 #include <iostream>
-#include "bitmap.h"
-#include "initStatics.h"
+#include "FlashlightApp.h" 
 
+
+
+
+FlashlightApp* FlashlightApp::appInstance = nullptr;
 int main(){
 
-    char* projectname = "flashlight effect" ;
-   
-    bitmap GUI;
-    //bitmap*   bitmapobj = GUI.bitmap_address();
-    GUI.printInstructions() ;
-    GUI.window(1,&projectname) ;
-
-
-
+    FlashlightApp app;
+    char* text = "FashLight Effect App" ;
+    app.run(1, &text);
+    return 0 ;
 }
-

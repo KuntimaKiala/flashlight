@@ -37,6 +37,10 @@ Kernel::~Kernel() {
 
 }
 
+__host__ 
+float * Kernel:: getIntensityAddress() {
+    return hostIntensity;
+}
 
 __host__   
 void Kernel::cudaLauncher(float x, float y, float radius, float intensityFactor) {
