@@ -1,9 +1,26 @@
-#ifndef KERNEL_H
+#ifndef KERNEL_H 
 #define KERNEL_H
+#include <cmath>
+#include <iostream>
+#include <string>
+#include "constants.h"
+#pragma once 
 
-struct uchar4;
-struct int2;
+struct  Kernel
+{
 
-void kernelLauncher(uchar4 *d_out, int w, int h, int2 pos);
+public :
+    Kernel(int width, int height) ;
+    ~Kernel();
+    void cudaLauncher(float x, float y, float radius, float intensityFactor);
+    static void debugging (const std::string & text)  {std::cout<<text<< std::endl ;} ;
+private :
+    const int Width ;
+    const int Height ;
+    float* cudaIntensity
+    float hostIntensity[constant::width*constant::height] ;
 
-#endif
+};
+
+
+#endif 
