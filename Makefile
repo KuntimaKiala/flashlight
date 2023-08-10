@@ -8,5 +8,5 @@ OBJ=-o
 FILES=main.cpp FlashlightApp.cpp kernel.cu
 LAUNCH=&& ./flashlight
 $(PROJECT) : $(FILES)
-	$(NVCC) $(NVCC_FLAGS) $(LDFLAGS) $(FILES) $(OBJ) $(PROJECT) $(LAUNCH)
+	$(NVCC) $(NVCC_FLAGS) $(LDFLAGS) $(FILES) $(OBJ) $(PROJECT) 
 

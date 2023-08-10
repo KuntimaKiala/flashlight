@@ -12,6 +12,7 @@ void calculateFlashlightIntensity(float* cudaIntensity, int width, int height, f
         float dy = y - ((height - idy) / (float)height) * 2.0f + 1.0f;
         float distance = sqrtf(dx * dx + dy * dy);
 
+
         if (distance < radius) {
             cudaIntensity[index] = intensityFactor * (1.0f - distance / radius);
         } else {
@@ -23,31 +24,48 @@ void calculateFlashlightIntensity(float* cudaIntensity, int width, int height, f
 }
 
 
+
 __host__ 
 Kernel::Kernel(int width, int height ) : Width(width), Height(height) {
-
-        cudaMalloc((void**)&cudaIntensity, Width*Height*sizeof(float)) ;
-}
+    //float* intensity = new float[Width * Height];
+    cudaMalloc(&cudaIntensity, Width*Height*sizeof(float))  ;
+}  
 
 
 __host__
 Kernel::~Kernel() {
-
-    cudaFree(cudaIntensity) ;
-
+    //delete [] intensity ;
+    cudaFree(cudaIntensity);
+   
 }
 
-__host__ 
-float * Kernel:: getIntensityAddress() {
+ float * Kernel::getIntensity() {
+  
     return hostIntensity;
-}
+;
+ }
+
+
 
 __host__   
 void Kernel::cudaLauncher(float x, float y, float radius, float intensityFactor) {
     
-    dim3 threadSize(constant::threads, constant::threads) ;
-    dim3 blockSize((Width + constant::threads - 1)/constant::threads, (Height + constant::threads - 1)/constant::threads) ;
-    calculateFlashlightIntensity<<<blockSize,threadSize>>>(cudaIntensity,Width, Height,x,y,radius,intensityFactor) ;
+    dim3 block(constant::threads, constant::threads) ;
+    dim3 grid( (Width + block.x - 1)/block.x, (Height + block.y - 1)/block.y) ;
+
+   
+    std::cout << Width << " " << Height << std::endl ;
+    
+    
+    calculateFlashlightIntensity<<<grid,block>>>(cudaIntensity,Width, Height,x,y,radius,intensityFactor) ;
+    
+
+    cudaMemcpy(hostIntensity, cudaIntensity, Height*Width* sizeof(float), cudaMemcpyDeviceToHost);
+    
+    
+    debugging("bro") ;
+    //cudaFree(cudaIntensity);
+    
 
 }
 
