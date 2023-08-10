@@ -87,10 +87,11 @@ void  FlashlightApp::mouseMotion(int x, int y){
 
      
 
- 
+    //mouseX = (x / (float)screenWidth) * 2.0f - 1.0f;
+    //mouseY = ((screenHeight - y) / (float)screenHeight) * 2.0f - 1.0f;
 
     if (toggle == false) return ;
-    pixel->x = (x/(float)constant::width *2.0f) -1.0f ;
+    pixel->x = (x/(float)constant::width) *2.0f -1.0f ;
     pixel->y = ((constant::height-y)/(float)constant::height)*2.0f -1.0f ;
 
     isMouseInsideWindow = (pixel->x >= -1.0f && pixel->x <= 1.0f && pixel->y >= -1.0f && pixel->y <= 1.0f);

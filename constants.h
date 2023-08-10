@@ -5,8 +5,8 @@
 
 
 namespace constant{
-    constexpr int width  = 400 ;
-    constexpr int height = 400 ;
+    constexpr int width  = 900 ;
+    constexpr int height = 800 ;
     constexpr float radius = 0.1f;
     constexpr float intensityFactor = 0.5f;
     constexpr bool isFalse = false ;

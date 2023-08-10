@@ -3,9 +3,10 @@
 __global__ 
 void calculateFlashlightIntensity(float* cudaIntensity, int width, int height, float x, float y, float radius, float intensityFactor){
 
-    const int idx = blockIdx.x*gridDim.x + threadIdx.x ;
-    const int idy = blockIdx.y*gridDim.y + threadIdx.y ; 
+    const int idx = blockIdx.x*blockDim.x + threadIdx.x ;
+    const int idy = blockIdx.y*blockDim.y + threadIdx.y ; 
     const int index = idx + idy*width;
+
 
     if (idx < width && idy < height) {
         float dx = x - (idx / (float)width) * 2.0f + 1.0f;
